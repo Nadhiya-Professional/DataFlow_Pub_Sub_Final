@@ -1,4 +1,2 @@
-apache_beam
-apache_beam.options.pipeline_options.PipelineOptions
+apache_beam[gcp]
 json
-apache_beam.io.gcp.internal.clients.bigquery
