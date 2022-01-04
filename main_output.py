@@ -249,4 +249,4 @@ if __name__ == '__main__':
         order_final | "Write to PubSub" >> beam.io.WriteToPubSub(topic="projects/york-cdf-start/topics/dataflow-order"
                                                                        "-stock-update",
                                                                  with_attributes=False)
-        print("done1")
+        print("done")
