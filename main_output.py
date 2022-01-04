@@ -1,8 +1,8 @@
 
-# import apache_beam as beam
-# from apache_beam.options.pipeline_options import PipelineOptions
-# import json
-# from apache_beam.io.gcp.internal.clients import bigquery
+import apache_beam as beam
+from apache_beam.options.pipeline_options import PipelineOptions
+import json
+from apache_beam.io.gcp.internal.clients import bigquery
 
 
 # This Class Transforms the Customer full name into first name and last name
