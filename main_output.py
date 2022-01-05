@@ -16,10 +16,10 @@ if __name__ == '__main__':
     }
     pipeline_options = PipelineOptions(temp_location="gs://nm_york_cdf-_start/results/tmp")
     with beam.Pipeline(options=pipeline_options) as pipeline:
-        output = pipeline | "Read from table" >> beam.io.ReadFromBigQuery(query="select table1.order_id,table1.name,table2.last_name from  york-cdf-start.bigquerypython.bqtable1 as table1 "
-                                                                                "join york-cdf-start.bigquerypython.bqtable4 as table2 on table1.order_id = table2.order_id",project ="york-cdf-start",use_standard_sql=True) | beam.Map(print)
+        output = pipeline | "Read from table" >> beam.io.ReadFromBigQuery(query="select table1.order_id,table2.last_name from  york-cdf-start.bigquerypython.bqtable1 as table1 "
+                                                                                "join york-cdf-start.bigquerypython.bqtable4 as table2 on table1.order_id = table2.order_id",project ="york-cdf-start",use_standard_sql=True)
 
-        output | "Write to PubSub" >> beam.io.WriteToBigQuery(
+        output | "Write to bigquery" >> beam.io.WriteToBigQuery(
             table_spec3,
             schema=table_schema,
             create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED)
