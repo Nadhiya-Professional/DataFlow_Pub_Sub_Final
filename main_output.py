@@ -183,7 +183,7 @@ if __name__ == '__main__':
     pipeline_options = PipelineOptions(streaming=True,
                                        runner='DataflowRunner',
                                        project="york-cdf-start",
-                                       job_name='nadhiya6',
+                                       job_name='nadhiynew1',
                                        temp_location="gs://nm_york_cdf-_start/results/tmp/",
                                        region='us-central1',
                                        staging_location = "gs://nm_york_cdf-_start/stage"
@@ -258,5 +258,5 @@ if __name__ == '__main__':
 #                                                                  with_attributes=False)
         
         pipeline_result = pipeline.run()
-        pipeline_result.wait_until_finish(duration=600000)
+        pipeline_result.wait_until_finish(duration=300000)
         pipeline_result.cancel()
