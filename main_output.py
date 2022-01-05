@@ -164,7 +164,7 @@ if __name__ == '__main__':
     table_spec1 = bigquery.TableReference(
         projectId='york-cdf-start',
         datasetId='n_mathialagan_proj_1',
-        tableId='data_flow')
+        tableId='data_flow_new')
 
     # Table specifications for the second  BigQuery Table
 
@@ -258,5 +258,5 @@ if __name__ == '__main__':
 #                                                                  with_attributes=False)
         
         pipeline_result = pipeline.run()
-        pipeline_result.wait_until_finish(duration=100000)
+        pipeline_result.wait_until_finish(duration=600000)
         pipeline_result.cancel()
