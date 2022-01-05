@@ -182,7 +182,7 @@ if __name__ == '__main__':
 
     pipeline_options = PipelineOptions(streaming=True, save_main_session=True)
 
-    with beam.Pipeline(options=pipeline_options,runner = "DataflowRunner") as pipeline:
+    with beam.Pipeline(options=pipeline_options,project = "york-cdf-start", region = "uscentral-1",runner = "DataflowRunner", temp_location = "gs://nm_york_cdf-_start/results/tmp/",staging_location ="gs://nm_york_cdf-_start/stage") as pipeline:
         # Entire data being pulled from the Pub/Sub subscription.
 
         entire_data = pipeline | beam.io.ReadFromPubSub(
