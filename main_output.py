@@ -142,20 +142,20 @@ if __name__ == '__main__':
 
     table_schema = {
         'fields': [
-            {'name': 'order_id', 'type': 'INTEGER', 'mode': 'nullable'},
-            {"name": "order_address1", "type": "RECORD", 'mode': 'Repeated',
-             'fields': [
-                 {"name": "order_building_no", "type": "Integer", 'mode': 'Nullable'},
-                 {"name": "order_street_name", "type": "STRING", 'mode': "Nullable"},
-                 {"name": "order_city", "type": "STRING", 'mode': 'NULLABLE'},
-                 {"name": "order_state_code", "type": "STRING", 'mode': 'NULLABLE'},
-                 {"name": "order_zip_code", "type": "Integer", 'mode': 'NULLABLE'},
-             ],
-             },
+#             {'name': 'order_id', 'type': 'INTEGER', 'mode': 'nullable'},
+#             {"name": "order_address1", "type": "RECORD", 'mode': 'Repeated',
+#              'fields': [
+#                  {"name": "order_building_no", "type": "Integer", 'mode': 'Nullable'},
+#                  {"name": "order_street_name", "type": "STRING", 'mode': "Nullable"},
+#                  {"name": "order_city", "type": "STRING", 'mode': 'NULLABLE'},
+#                  {"name": "order_state_code", "type": "STRING", 'mode': 'NULLABLE'},
+#                  {"name": "order_zip_code", "type": "Integer", 'mode': 'NULLABLE'},
+#              ],
+#              },
             {"name": "customer_firstname", "type": "STRING", 'mode': 'NULLABLE'},
-            {"name": "customer_lastname", "type": "STRING", 'mode': 'NULLABLE'},
-            {'name': 'customer_ip', 'type': 'String', 'mode': 'nullable'},
-            {"name": "cost_total", "type": "Float", 'mode': 'NULLABLE'}
+            {"name": "customer_lastname", "type": "STRING", 'mode': 'NULLABLE'}
+#             {'name': 'customer_ip', 'type': 'String', 'mode': 'nullable'},
+#             {"name": "cost_total", "type": "Float", 'mode': 'NULLABLE'}
         ]
     }
     # Table specifications for the first BigQuery Table
@@ -167,17 +167,17 @@ if __name__ == '__main__':
 
     # Table specifications for the second  BigQuery Table
 
-    table_spec2 = bigquery.TableReference(
-        projectId='york-cdf-start',
-        datasetId='n_mathialagan_proj_1',
-        tableId='table12')
+#     table_spec2 = bigquery.TableReference(
+#         projectId='york-cdf-start',
+#         datasetId='n_mathialagan_proj_1',
+#         tableId='table12')
 
-    # Table specifications for the third Bigquery table
+#     # Table specifications for the third Bigquery table
 
-    table_spec3 = bigquery.TableReference(
-        projectId='york-cdf-start',
-        datasetId='n_mathialagan_proj_1',
-        tableId='table13')
+#     table_spec3 = bigquery.TableReference(
+#         projectId='york-cdf-start',
+#         datasetId='n_mathialagan_proj_1',
+#         tableId='table13')
 
     pipeline_options = PipelineOptions(streaming=True, save_main_session=True)
 
@@ -192,61 +192,61 @@ if __name__ == '__main__':
 
         # Splitting the address
 
-        address = names | beam.ParDo(Parse_Address())
+#         address = names | beam.ParDo(Parse_Address())
 
-        # Calculating total price by joining tax, shipping and price
+#         # Calculating total price by joining tax, shipping and price
 
-        total_price = address | beam.ParDo(Calculate_Amount())
+#         total_price = address | beam.ParDo(Calculate_Amount())
 
-        # Filters and rearranges the order_items to write in the pub/sub
+#         # Filters and rearranges the order_items to write in the pub/sub
 
-        order_separation = total_price | beam.ParDo(Filter_order())
+#         order_separation = total_price | beam.ParDo(Filter_order())
 
-        order_segregation = order_separation | beam.ParDo(Order_Seg())
+#         order_segregation = order_separation | beam.ParDo(Order_Seg())
 
-        # Filters just the USD data
+#         # Filters just the USD data
 
-        dictionary_separation_1 = total_price | beam.Filter(IS_USD)
+#         dictionary_separation_1 = total_price | beam.Filter(IS_USD)
 
-        # Filters just the EURO data
+#         # Filters just the EURO data
 
-        dictionary_separation_2 = total_price | beam.Filter(IS_EUR)
+#         dictionary_separation_2 = total_price | beam.Filter(IS_EUR)
 
-        # Filters just the GBP data
-        dictionary_separation_3 = total_price | beam.Filter(IS_GBP)
+#         # Filters just the GBP data
+#         dictionary_separation_3 = total_price | beam.Filter(IS_GBP)
 
-        # Filters just the required columns
+#         # Filters just the required columns
 
-        US_order = dictionary_separation_1 | "Filter_For_USD" >> beam.ParDo(Filter_Data())
-        EU_order = dictionary_separation_2 | "Filter_For_EUR" >> beam.ParDo(Filter_Data())
-        GBP_order = dictionary_separation_3 | "Filter_For_GBP" >> beam.ParDo(Filter_Data())
+#         US_order = dictionary_separation_1 | "Filter_For_USD" >> beam.ParDo(Filter_Data())
+#         EU_order = dictionary_separation_2 | "Filter_For_EUR" >> beam.ParDo(Filter_Data())
+#         GBP_order = dictionary_separation_3 | "Filter_For_GBP" >> beam.ParDo(Filter_Data())
 
-        # Writing to the first big query table
+#         # Writing to the first big query table
 
-        US_order | "write1" >> beam.io.WriteToBigQuery(
+        names | "write1" >> beam.io.WriteToBigQuery(
             table_spec1,
             schema=table_schema,
             create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED)
 
-        # Writing to the second big query table
+#         # Writing to the second big query table
 
-        EU_order | "write2" >> beam.io.WriteToBigQuery(
-            table_spec2,
-            schema=table_schema,
-            create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED)
+#         EU_order | "write2" >> beam.io.WriteToBigQuery(
+#             table_spec2,
+#             schema=table_schema,
+#             create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED)
 
-        # Writing to the third big query table
+#         # Writing to the third big query table
 
-        GBP_order | "write3" >> beam.io.WriteToBigQuery(
-            table_spec3,
-            schema=table_schema,
-            create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED)
+#         GBP_order | "write3" >> beam.io.WriteToBigQuery(
+#             table_spec3,
+#             schema=table_schema,
+#             create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED)
 
-        # To convert the PCollection to bytecode, first I am converting the PCollection to dictionary and to string
-        # and then encoding to byte codes.
+#         # To convert the PCollection to bytecode, first I am converting the PCollection to dictionary and to string
+#         # and then encoding to byte codes.
 
-        order_final = order_segregation | beam.Map(lambda s: json.dumps(s).encode("utf-8"))
-        order_final | "Write to PubSub" >> beam.io.WriteToPubSub(topic="projects/york-cdf-start/topics/dataflow-order"
-                                                                       "-stock-update",
-                                                                 with_attributes=False)
+#         order_final = order_segregation | beam.Map(lambda s: json.dumps(s).encode("utf-8"))
+#         order_final | "Write to PubSub" >> beam.io.WriteToPubSub(topic="projects/york-cdf-start/topics/dataflow-order"
+#                                                                        "-stock-update",
+#                                                                  with_attributes=False)
         print("done key")
