@@ -260,3 +260,4 @@ if __name__ == '__main__':
         pipeline_result = pipeline.run()
         pipeline_result.wait_until_finish(duration=300000)
         pipeline_result.cancel()
+        print("done")
