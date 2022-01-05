@@ -15,7 +15,8 @@ if __name__ == '__main__':
             ]
     }
     pipeline_options = PipelineOptions(temp_location="gs://nm_york_cdf-_start/results/tmp")
-    with beam.Pipeline(options=pipeline_options) as pipeline:
+    argv1 = [project = "york-cdf-start",staging_location="gs://nm_york_cdf-_start/stage",job_name="dataflow_nad"]
+    with beam.Pipeline(options=pipeline_options,runner="DataflowRunner",argv = argv1) as pipeline:
         output = pipeline | "Read from table" >> beam.io.ReadFromBigQuery(query="select table1.order_id,table2.last_name from  york-cdf-start.bigquerypython.bqtable1 as table1 "
                                                                                 "join york-cdf-start.bigquerypython.bqtable4 as table2 on table1.order_id = table2.order_id",project ="york-cdf-start",use_standard_sql=True)
 
