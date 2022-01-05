@@ -180,10 +180,15 @@ if __name__ == '__main__':
 #         datasetId='n_mathialagan_proj_1',
 #         tableId='table13')
 
-    pipeline_options = PipelineOptions(streaming=True, save_main_session=True)
-    argv1 = ["project","york-cdf-start", "region","uscentral-1","runner","DataflowRunner", "temp_location","gs://nm_york_cdf-_start/results/tmp/","staging_location","gs://nm_york_cdf-_start/stage"]
-
-    with beam.Pipeline(options=pipeline_options,argv=argv1) as pipeline:
+    pipeline_options = PipelineOptions(streaming=True,
+                                       runner='DataflowRunner',
+                                       project="york-cdf-start",
+                                       job_name='nadhiya4',
+                                       temp_location="gs://nm_york_cdf-_start/results/tmp/",
+                                       region='us-central1',
+                                       staging_location = "gs://nm_york_cdf-_start/stage"
+                                       )
+    with beam.Pipeline(options=pipeline_options) as pipeline:
         # Entire data being pulled from the Pub/Sub subscription.
 
         entire_data = pipeline | beam.io.ReadFromPubSub(
