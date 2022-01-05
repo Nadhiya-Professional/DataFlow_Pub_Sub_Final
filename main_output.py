@@ -191,7 +191,7 @@ if __name__ == '__main__':
 
         # Splitting the customer name into first and last name
         names = entire_data | beam.ParDo(Parse_Name())
-
+        
         # Splitting the address
 
 #         address = names | beam.ParDo(Parse_Address())
@@ -251,4 +251,7 @@ if __name__ == '__main__':
 #         order_final | "Write to PubSub" >> beam.io.WriteToPubSub(topic="projects/york-cdf-start/topics/dataflow-order"
 #                                                                        "-stock-update",
 #                                                                  with_attributes=False)
-        print("done data flow2")
+        
+        pipeline_result = pipeline.run()
+        pipeline_result.wait_until_finish(duration=100000)
+        pipeline_result.cancel()
