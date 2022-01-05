@@ -164,7 +164,7 @@ if __name__ == '__main__':
     table_spec1 = bigquery.TableReference(
         projectId='york-cdf-start',
         datasetId='n_mathialagan_proj_1',
-        tableId='customers')
+        tableId='cus_data_flow')
 
     # Table specifications for the second  BigQuery Table
 
@@ -181,8 +181,9 @@ if __name__ == '__main__':
 #         tableId='table13')
 
     pipeline_options = PipelineOptions(streaming=True, save_main_session=True)
+    argv1 = ["project","york-cdf-start", "region","uscentral-1","runner","DataflowRunner", "temp_location","gs://nm_york_cdf-_start/results/tmp/","staging_location","gs://nm_york_cdf-_start/stage"]
 
-    with beam.Pipeline(options=pipeline_options,project = "york-cdf-start", region = "uscentral-1",runner = "DataflowRunner", temp_location = "gs://nm_york_cdf-_start/results/tmp/",staging_location ="gs://nm_york_cdf-_start/stage") as pipeline:
+    with beam.Pipeline(options=pipeline_options,argv=argv1) as pipeline:
         # Entire data being pulled from the Pub/Sub subscription.
 
         entire_data = pipeline | beam.io.ReadFromPubSub(
