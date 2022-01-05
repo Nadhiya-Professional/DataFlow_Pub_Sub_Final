@@ -11,7 +11,7 @@ if __name__ == '__main__':
     table_schema = {
         'fields': [
             {'name': 'order_id', 'type': 'INTEGER', 'mode': 'nullable'},
-            {'name': 'name', 'type': 'string', 'mode': 'nullable'}
+            {'name': 'last_name', 'type': 'string', 'mode': 'nullable'}
             ]
     }
     pipeline_options = PipelineOptions(temp_location="gs://nm_york_cdf-_start/results/tmp/")
