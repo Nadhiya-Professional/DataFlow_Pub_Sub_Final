@@ -11,9 +11,10 @@ class Parse_Name(beam.DoFn):
 
     def process(self, element):
         data_dict = json.loads(element.decode('utf-8'))
-        data_dict["customer_firstname"] = data_dict["customer_name"].split(" ")[0]
-        data_dict["customer_lastname"] = data_dict["customer_name"].split(" ")[1]
-        yield data_dict
+        new_dict = {}
+        new_dict["customer_firstname"] = data_dict["customer_name"].split(" ")[0]
+        new_dict["customer_lastname"] = data_dict["customer_name"].split(" ")[1]
+        yield new_dict
 
 
 # This Class is for Parsing Address. There was no uniformity in the addresses. So used different if conditions to put
