@@ -164,7 +164,7 @@ if __name__ == '__main__':
     table_spec1 = bigquery.TableReference(
         projectId='york-cdf-start',
         datasetId='n_mathialagan_proj_1',
-        tableId='cus_data_flow')
+        tableId='data_flow')
 
     # Table specifications for the second  BigQuery Table
 
