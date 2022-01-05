@@ -1,4 +1,3 @@
-
 import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
 import json
@@ -12,7 +11,7 @@ if __name__ == '__main__':
     table_schema = {
         'fields': [
             {'name': 'order_id', 'type': 'INTEGER', 'mode': 'nullable'},
-            {'name': 'order_id', 'type': 'INTEGER', 'mode': 'nullable'}
+            {'name': 'name', 'type': 'string', 'mode': 'nullable'}
             ]
     }
     pipeline_options = PipelineOptions(temp_location="gs://nm_york_cdf-_start/results/tmp/")
@@ -24,3 +23,4 @@ if __name__ == '__main__':
             table_spec3,
             schema=table_schema,
             create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED)
+
