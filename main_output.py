@@ -14,7 +14,7 @@ if __name__ == '__main__':
             {'name': 'last_name', 'type': 'string', 'mode': 'nullable'}
             ]
     }
-    pipeline_options = PipelineOptions(region="us-central1",temp_location="gs://york_temp_files",project="york-cdf-start",job_name="dataflow-nadhiya12",staging_location="gs://nm_york_cdf-_start/stage")
+    pipeline_options = PipelineOptions(region="us-central1",temp_location="gs://york_temp_files",project="york-cdf-start",job_name="dataflow-nadhiya12",staging_location="gs://york_temp_files/stage")
     
     with beam.Pipeline(options=pipeline_options,runner="DataflowRunner") as pipeline:
         output = pipeline | "Read from table" >> beam.io.ReadFromBigQuery(query="select table1.order_id,table2.last_name from  york-cdf-start.bigquerypython.bqtable1 as table1 "
