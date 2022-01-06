@@ -24,4 +24,6 @@ if __name__ == '__main__':
             table_spec3,
             schema=table_schema,
             create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED)
+    print("done")    
 
+     
